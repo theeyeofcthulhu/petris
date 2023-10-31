@@ -1,0 +1,7 @@
+Changelog for Petris
+
+1.0.1:	* Manpage included.
+	* Fixed bug concerning use of the USER environment variable
+	  in highscore.c.
+
+1.0:	* No changelog before release 1.0.1.
