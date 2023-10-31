@@ -373,7 +373,11 @@ int drop_block(int type, int level)
             }
             set_block(y, x, type, orient);
 
-			update_screen();
+            // Need to call update_well(0, WELL_HEIGHT)
+            // because set_block() only updates up to
+            // block's height. Here, we must update everything,
+            // because the block we are dropping would hang
+            // in the air.
 			update_well(0, WELL_HEIGHT);
             return y;
         }

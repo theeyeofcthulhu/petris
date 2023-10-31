@@ -1,3 +1,9 @@
+Readme for this fork
+
+This fork of Petris adds
+    - alternate controls (see config.h),
+    - immediate dropping of blocks
+
 Readme for Petris v. 1.0.1
 
 Petris is Peter's Tetris
