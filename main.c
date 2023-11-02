@@ -72,7 +72,7 @@ void parse_args(int argc, char **argv)
 /* Show or hide cursor. */
 void cursor_vis(int vis)
 {
-	char *cmd;
+	/** char *cmd;
 	
 	if (vis == 1)
 		cmd = tigetstr("cnorm");
@@ -85,7 +85,8 @@ void cursor_vis(int vis)
 		return;
 	}
 		
-	putp(cmd);
+	putp(cmd);**/
+    curs_set(vis);
 }
 
 void init_colors()
