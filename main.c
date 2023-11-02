@@ -250,8 +250,8 @@ int show_score(POINTS points, int use_hs)
 	update_screen();
 	wrefresh(win);
 	
-	if (ch != ERR)
-		while (getch() != ERR);
+    while (getch() != ERR)
+        ;
 
 	nodelay(stdscr, FALSE);
 
