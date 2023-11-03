@@ -11,14 +11,16 @@
 #define CONTROL_DROP	KEY_DOWN	/* Drop */
 #define CONTROL_REFRESH	'r'		/* Refresh screen */
 
-/* Control keys. These should be something ncurses understands. */
+/* Alternate controls */
 #define ALT_CONTROL_LEFT	'a'	/* Move left */
 #define ALT_CONTROL_RIGHT	'd'	/* Move right */
 #define ALT_CONTROL_ROT_CW	'k'		/* Rotate clock-wise */
 #define ALT_CONTROL_ROT_CCW	'j'		/* Rotate counter-clock-wise */
 #define ALT_CONTROL_DROP	's'	/* Drop */
 
-#define CONTROL_FULL_DROP 'h'
+/* New controls */
+#define CONTROL_FULL_DROP   'h'
+#define CONTROL_PAUSE       'p'
 
 /* Highscore file. */
 #define HIGHSCORE_FILE	"/var/local/petris/highscores"

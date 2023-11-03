@@ -279,7 +279,7 @@ void update_stat(POINTS points, int block)
 
 /* Drop a block in the well. When done return y-cord. of where block
    ended. If it's not possible to even start with a new block return -1. */
-int drop_block(int type, int level)
+int drop_block(int type, POINTS points, int next)
 {
 	int defx = WELL_WIDTH / 2 - BLOCK_DOTS / 2;
 	int y = 0;
@@ -295,7 +295,7 @@ int drop_block(int type, int level)
 		return -1;	/* Oh no, game over. */
 	
 	timeout.tv_sec = 0;
-	timeout.tv_usec = delay[level];
+	timeout.tv_usec = delay[points.level];
 	
 	FD_ZERO(&inputs);
 	FD_SET(0, &inputs);
@@ -361,10 +361,36 @@ int drop_block(int type, int level)
             full_drop = 1;
             break;
 
+        case CONTROL_PAUSE:
+            const char *msg = "PAUSED";
+
+            int x,y,w,h;
+            getbegyx(well_win,y,x);
+            getmaxyx(well_win,h,w);
+
+            int win_w = strlen(msg) + 2;
+            WINDOW *win = newwin(3, win_w, y + h / 2 - 2, x + w / 2 - win_w / 2);
+
+            box(win, 0, 0);
+            mvwaddstr(win, 1, 1, msg);
+            wrefresh(win);
+
+            while (getch() != CONTROL_PAUSE)
+                ;
+
+            delwin(win);
+
+			update_screen();
+			update_well(0, WELL_HEIGHT);
+			draw_block(well_win, y, x, type, orient, 0);
+            update_stat(points, next);
+            break;
+
 		case CONTROL_REFRESH:	/* Refresh well. */
 			update_screen();
 			update_well(0, WELL_HEIGHT);
 			draw_block(well_win, y, x, type, orient, 0);
+            update_stat(points, next);
 		}
 
         if (full_drop) {
@@ -394,7 +420,7 @@ int drop_block(int type, int level)
 				return y;
 			}
 			timeout.tv_sec = 0;
-			timeout.tv_usec = delay[level];
+			timeout.tv_usec = delay[points.level];
 		}		
 	}
 }
@@ -425,7 +451,7 @@ POINTS play_game(int level)
 	update_stat(points, next);
 	
 	while(1) {
-		y = drop_block(cur, points.level);
+		y = drop_block(cur, points, next);
 		if (y >= 0) {
 			tmp = check_lines(y);
 			points.points += (tmp.points + points.level);
